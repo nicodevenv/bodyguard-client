@@ -23,9 +23,6 @@
         /** @var Client */
         private $client;
 
-        /** @var bool */
-        private $isInternal;
-
         /** @var string */
         private $ip;
 
@@ -62,6 +59,7 @@
          *
          * @return array
          * @throws BodyguardException
+         * @throws GuzzleException
          */
         public function registerUser(string $username, string $email, string $password): array
         {
@@ -83,6 +81,7 @@
          *
          * @return array
          * @throws BodyguardException
+         * @throws GuzzleException
          */
         public function loginUser(string $usernameOrEmail, string $password): array
         {
@@ -103,6 +102,7 @@
          *
          * @return array
          * @throws BodyguardException
+         * @throws GuzzleException
          */
         public function getUserSessionToken(string $userSpecialLogin, string $userSpecialSecret): array
         {
@@ -116,6 +116,7 @@
          *
          * @return array
          * @throws BodyguardException
+         * @throws GuzzleException
          */
         public function validateToken(string $authorization): array
         {
@@ -129,6 +130,7 @@
          *
          * @return array
          * @throws BodyguardException
+         * @throws GuzzleException
          */
         public function logout(string $authorization): array
         {
@@ -145,17 +147,14 @@
          *
          * @return array
          * @throws BodyguardException
+         * @throws GuzzleException
          */
         private function postToBodyguard(string $url, array $postData, ?string $arg1 = null, ?string $arg2 = null): array
         {
-            try {
-                return $this->client->request('POST', $this->getUrl($url, $arg1, $arg2), [
-                    'headers'     => $this->getHeaders($arg1),
-                    'form_params' => $postData,
-                ]);
-            } catch (GuzzleException $e) {
-                return $this->getGuzzleError($e);
-            }
+            return $this->client->request('POST', $this->getUrl($url, $arg1, $arg2), [
+                'headers'     => $this->getHeaders($arg1),
+                'form_params' => $postData,
+            ]);
         }
 
         /**
@@ -165,16 +164,13 @@
          *
          * @return array
          * @throws BodyguardException
+         * @throws GuzzleException
          */
         private function getFromBodyguard(string $url, ?string $arg1 = null, ?string $arg2 = null): array
         {
-            try {
-                return $this->client->request('GET', $this->getUrl($url, $arg1, $arg2), [
-                    'headers' => $this->getHeaders($arg1),
-                ]);
-            } catch (GuzzleException $e) {
-                return $this->getGuzzleError($e);
-            }
+            return $this->client->request('GET', $this->getUrl($url, $arg1, $arg2), [
+                'headers' => $this->getHeaders($arg1),
+            ]);
         }
 
         /**
