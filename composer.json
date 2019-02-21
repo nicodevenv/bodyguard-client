@@ -1,6 +1,12 @@
 {
-  "type": "project",
-  "license": "proprietary",
+  "name": "nicolaschung/bodyguard-client",
+  "description": "Client for bodyguard application",
+  "authors": [
+    {
+      "name": "Nicolas CHUNG",
+      "email": "nico.dev.env@gmail.com"
+    }
+  ],
   "require": {
     "php": "^7.1.3",
     "guzzlehttp/guzzle": "~6.0"
