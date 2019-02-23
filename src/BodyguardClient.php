@@ -123,7 +123,7 @@
         {
             $this->setMode(self::MODE_TOKEN);
 
-            return $this->getFromBodyguard('/api/oauth/token', $authorization);
+            return $this->getFromBodyguard('/api/oauth/access', $authorization);
         }
 
         /**
@@ -137,7 +137,7 @@
         {
             $this->setMode(self::MODE_TOKEN);
 
-            return $this->getFromBodyguard('/api/oauth/logout', $authorization);
+            return $this->getFromBodyguard('/api/user/logout', $authorization);
         }
 
         /**
