@@ -4,6 +4,7 @@
 
     use GuzzleHttp\Client;
     use GuzzleHttp\Exception\GuzzleException;
+    use Psr\Http\Message\ResponseInterface;
 
     class BodyguardClient
     {
@@ -57,11 +58,11 @@
          * @param string $email
          * @param string $password
          *
-         * @return array
+         * @return ResponseInterface
          * @throws BodyguardException
          * @throws GuzzleException
          */
-        public function registerUser(string $username, string $email, string $password): array
+        public function registerUser(string $username, string $email, string $password): ResponseInterface
         {
             $this->setMode(self::MODE_APPLICATION);
 
@@ -79,11 +80,11 @@
          * @param string $usernameOrEmail
          * @param string $password
          *
-         * @return array
+         * @return ResponseInterface
          * @throws BodyguardException
          * @throws GuzzleException
          */
-        public function loginUser(string $usernameOrEmail, string $password): array
+        public function loginUser(string $usernameOrEmail, string $password): ResponseInterface
         {
             $this->setMode(self::MODE_APPLICATION);
 
@@ -100,11 +101,11 @@
          * @param string $userSpecialLogin
          * @param string $userSpecialSecret
          *
-         * @return array
+         * @return ResponseInterface
          * @throws BodyguardException
          * @throws GuzzleException
          */
-        public function getUserSessionToken(string $userSpecialLogin, string $userSpecialSecret): array
+        public function getUserSessionToken(string $userSpecialLogin, string $userSpecialSecret): ResponseInterface
         {
             $this->setMode(self::MODE_SESSION);
 
@@ -114,11 +115,11 @@
         /**
          * @param string $authorization
          *
-         * @return array
+         * @return ResponseInterface
          * @throws BodyguardException
          * @throws GuzzleException
          */
-        public function validateToken(string $authorization): array
+        public function validateToken(string $authorization): ResponseInterface
         {
             $this->setMode(self::MODE_TOKEN);
 
@@ -128,11 +129,11 @@
         /**
          * @param string $authorization
          *
-         * @return array
+         * @return ResponseInterface
          * @throws BodyguardException
          * @throws GuzzleException
          */
-        public function logout(string $authorization): array
+        public function logout(string $authorization): ResponseInterface
         {
             $this->setMode(self::MODE_TOKEN);
 
@@ -145,13 +146,13 @@
          * @param null|string $arg1
          * @param null|string $arg2
          *
-         * @return array
+         * @return ResponseInterface
          * @throws BodyguardException
          * @throws GuzzleException
          */
-        private function postToBodyguard(string $url, array $postData, ?string $arg1 = null, ?string $arg2 = null): array
+        private function postToBodyguard(string $url, array $postData, ?string $arg1 = null, ?string $arg2 = null): ResponseInterface
         {
-            return $this->client->request('POST', $this->getUrl($url, $arg1, $arg2), [
+            return $this->client->post($this->getUrl($url, $arg1, $arg2), [
                 'headers'     => $this->getHeaders($arg1),
                 'form_params' => $postData,
             ]);
@@ -162,13 +163,13 @@
          * @param null|string $arg1
          * @param null|string $arg2
          *
-         * @return array
+         * @return ResponseInterface
          * @throws BodyguardException
          * @throws GuzzleException
          */
-        private function getFromBodyguard(string $url, ?string $arg1 = null, ?string $arg2 = null): array
+        private function getFromBodyguard(string $url, ?string $arg1 = null, ?string $arg2 = null): ResponseInterface
         {
-            return $this->client->request('GET', $this->getUrl($url, $arg1, $arg2), [
+            return $this->client->get($this->getUrl($url, $arg1, $arg2), [
                 'headers' => $this->getHeaders($arg1),
             ]);
         }
