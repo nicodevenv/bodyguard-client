@@ -118,6 +118,32 @@
             ];
         }
 
+        /**
+         * @param Request $request
+         * @param bool    $strict
+         *
+         * @return null|string
+         * @throws BodyguardException
+         */
+        public function getUserId(Request $request, bool $strict): ?string
+        {
+            $tokenValidation = null;
+
+            if ($request->headers->get('authorization')) {
+                $tokenValidation = $this->validateToken($request);
+
+                if ($strict && !isset($tokenValidation['data']['user_data']['user_id'])) {
+                    throw new BodyguardException('403', 'Invalid token', 'User id not found in token validation request');
+                }
+            }
+
+            if (null !== $tokenValidation){
+                return $tokenValidation['data']['user_data']['user_id'];
+            }
+
+            return null;
+        }
+
         private function getBodyguardClient(Request $request): BodyguardClient
         {
             return new BodyguardClient(
