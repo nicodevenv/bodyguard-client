@@ -2,19 +2,9 @@
 
     namespace BodyguardClient;
 
-    class BodyguardException extends \Exception
+    use NTools\Exception\AbstractException;
+
+    class BodyguardException extends AbstractException
     {
-        private $title;
 
-        public function __construct(int $code, string $title, string $message)
-        {
-            parent::__construct($message, $code);
-
-            $this->title = $title;
-        }
-
-        public function getTitle()
-        {
-            $this->getTitle();
-        }
     }
