@@ -125,7 +125,7 @@
          * @return null|string
          * @throws BodyguardException
          */
-        public function getUserId(Request $request, bool $strict): ?string
+        public function getUserId(Request $request, bool $strict = true): ?string
         {
             $tokenValidation = null;
 
